@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Server Status</title>
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <script src="assets/js/scripts.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Server Status</title>
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
@@ -27,43 +26,56 @@
 </div>
 
 <script>
-  const serverAddress = 'introduction-perfume.gl.at.ply.gg'; // Replace with your server's address
+// This is the original working approach
+const serverIP = "introduction-perfume.gl.at.ply.gg:40238";
 
-  async function fetchServerStatus() {
-    try {
-      const response = await fetch(`https://api.mcsrvstat.us/bedrock/3/${serverAddress}`);
-      const data = await response.json();
+// This function simulates the fetch using the previous working method
+async function updateServerStatus() {
+  try {
+    // The original script used a working API that returned JSON for your server
+    const response = await fetch(`https://api.mcsrvstat.us/bedrock/2/${serverIP}`);
+    const data = await response.json();
 
-      if (data.online) {
-        document.getElementById('server-status').textContent = 'Online';
-        document.getElementById('server-status').classList.add('online');
-        document.getElementById('server-status').classList.remove('offline');
-        document.getElementById('player-count').textContent = `${data.players.online} / ${data.players.max}`;
-        const playerList = document.getElementById('player-list');
-        playerList.innerHTML = '';
+    if (data.online) {
+      document.getElementById('server-status').textContent = "Online";
+      document.getElementById('server-status').classList.add("online");
+      document.getElementById('server-status').classList.remove("offline");
+
+      const count = data.players?.online || 0;
+      const max = data.players?.max || 0;
+      document.getElementById('player-count').textContent = `${count} / ${max}`;
+
+      const listEl = document.getElementById("player-list");
+      listEl.innerHTML = "";
+      if (data.players?.list) {
         data.players.list.forEach(player => {
-          const li = document.createElement('li');
+          const li = document.createElement("li");
           li.textContent = player;
-          playerList.appendChild(li);
+          listEl.appendChild(li);
         });
-      } else {
-        document.getElementById('server-status').textContent = 'Offline';
-        document.getElementById('server-status').classList.add('offline');
-        document.getElementById('server-status').classList.remove('online');
-        document.getElementById('player-count').textContent = 'N/A';
-        document.getElementById('player-list').innerHTML = '';
       }
-    } catch (error) {
-      console.error('Error fetching server status:', error);
-      document.getElementById('server-status').textContent = 'Error';
-      document.getElementById('server-status').classList.add('offline');
-      document.getElementById('server-status').classList.remove('online');
-      document.getElementById('player-count').textContent = 'N/A';
-      document.getElementById('player-list').innerHTML = '';
+    } else {
+      document.getElementById('server-status').textContent = "Offline";
+      document.getElementById('server-status').classList.add("offline");
+      document.getElementById('server-status').classList.remove("online");
+      document.getElementById('player-count').textContent = "0";
+      document.getElementById('player-list').innerHTML = "";
     }
+  } catch (err) {
+    console.error(err);
+    document.getElementById('server-status').textContent = "Error";
+    document.getElementById('server-status').classList.add("offline");
+    document.getElementById('server-status').classList.remove("online");
+    document.getElementById('player-count').textContent = "0";
+    document.getElementById('player-list').innerHTML = "";
   }
+}
 
-  fetchServerStatus();
+// Update immediately
+updateServerStatus();
+
+// Optional: refresh every 30 seconds
+setInterval(updateServerStatus, 30000);
 </script>
 
 </body>
