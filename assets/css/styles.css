@@ -1,5 +1,5 @@
 /* ========================================
-   Minecraft Modern Dark Theme – Fixed Dark Background
+   Full Minecraft-Themed Dark CSS
 ======================================== */
 
 /* Import Fonts */
@@ -13,10 +13,27 @@
 }
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #0d0d0d; /* Dark base */
   color: #ccc;
   min-height: 100vh;
   line-height: 1.6;
+
+  /* Background image */
+  background-image: url('../images/background-texture.png'); /* place your background in assets/images/ */
+  background-repeat: repeat;
+  background-position: center center;
+  background-size: auto;
+
+  /* Dark overlay for readability */
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.7);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Headings */
@@ -68,6 +85,15 @@ nav a:hover {
   max-width: 950px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 15px rgba(0,0,0,0.6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: -8px; left: -8px; right: -8px; bottom: -8px;
+  border: 2px dashed rgba(106,176,76,0.2);
+  border-radius: 14px;
+  pointer-events: none;
 }
 .card:hover {
   transform: translateY(-6px);
