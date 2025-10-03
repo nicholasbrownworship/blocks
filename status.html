@@ -1,81 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Server Status</title>
-<link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Server Status</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
 <header>
-  <h1>Server Status</h1>
+  <h1>Introduction Perfume Server</h1>
 </header>
 
 <nav>
   <a href="index.html">Home</a>
+  <a href="status.html">Server Status</a>
   <a href="gallery.html">Gallery</a>
   <a href="community.html">Community</a>
   <a href="about.html">About</a>
 </nav>
 
-<div class="card">
-  <p>Status: <span id="server-status">Loading...</span></p>
-  <p>Players Online: <span id="player-count">Loading...</span></p>
-  <ul id="player-list"></ul>
-</div>
+<main>
+  <div class="card">
+    <h2>Server Status</h2>
+    <p>Status: <span id="server-status">Loading...</span></p>
+    <p>Players Online: <span id="player-count">0</span></p>
+
+    <h3>Online Players</h3>
+    <ul id="player-list">
+      <li>Loading...</li>
+    </ul>
+
+    <button onclick="copyIP()">Copy Server IP</button>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Introduction Perfume Minecraft Server</p>
+</footer>
 
 <script>
-// This is the original working approach
-const serverIP = "introduction-perfume.gl.at.ply.gg:40238";
+const serverAddress = "introduction-perfume.gl.at.ply.gg";
+const serverPort = 40238;
 
-// This function simulates the fetch using the previous working method
-async function updateServerStatus() {
+async function fetchServerStatus() {
   try {
-    // The original script used a working API that returned JSON for your server
-    const response = await fetch(`https://api.mcsrvstat.us/bedrock/2/${serverIP}`);
+    const response = await fetch(`https://api.mcsrvstat.us/bedrock/2/${serverAddress}:${serverPort}`);
     const data = await response.json();
 
-    if (data.online) {
-      document.getElementById('server-status').textContent = "Online";
-      document.getElementById('server-status').classList.add("online");
-      document.getElementById('server-status').classList.remove("offline");
+    const statusEl = document.getElementById("server-status");
+    const playerCountEl = document.getElementById("player-count");
+    const playerListEl = document.getElementById("player-list");
 
-      const count = data.players?.online || 0;
-      const max = data.players?.max || 0;
-      document.getElementById('player-count').textContent = `${count} / ${max}`;
+    if(data.online) {
+      statusEl.textContent = "Online";
+      statusEl.className = "online";
 
-      const listEl = document.getElementById("player-list");
-      listEl.innerHTML = "";
-      if (data.players?.list) {
-        data.players.list.forEach(player => {
+      const players = data.players?.list || [];
+      playerCountEl.textContent = players.length;
+
+      // Clear current list
+      playerListEl.innerHTML = "";
+      if(players.length === 0){
+        playerListEl.innerHTML = "<li>No players online</li>";
+      } else {
+        players.forEach(player => {
           const li = document.createElement("li");
           li.textContent = player;
-          listEl.appendChild(li);
+          playerListEl.appendChild(li);
         });
       }
+
     } else {
-      document.getElementById('server-status').textContent = "Offline";
-      document.getElementById('server-status').classList.add("offline");
-      document.getElementById('server-status').classList.remove("online");
-      document.getElementById('player-count').textContent = "0";
-      document.getElementById('player-list').innerHTML = "";
+      statusEl.textContent = "Offline";
+      statusEl.className = "offline";
+      playerCountEl.textContent = 0;
+      playerListEl.innerHTML = "<li>Server is offline</li>";
     }
-  } catch (err) {
+
+  } catch(err) {
     console.error(err);
-    document.getElementById('server-status').textContent = "Error";
-    document.getElementById('server-status').classList.add("offline");
-    document.getElementById('server-status').classList.remove("online");
-    document.getElementById('player-count').textContent = "0";
-    document.getElementById('player-list').innerHTML = "";
+    document.getElementById("server-status").textContent = "Error";
+    document.getElementById("player-count").textContent = 0;
+    document.getElementById("player-list").innerHTML = "<li>Error fetching data</li>";
   }
 }
 
-// Update immediately
-updateServerStatus();
+// Copy IP function
+function copyIP() {
+  navigator.clipboard.writeText(`${serverAddress}:${serverPort}`)
+    .then(() => alert("Server IP copied!"))
+    .catch(() => alert("Failed to copy IP."));
+}
 
-// Optional: refresh every 30 seconds
-setInterval(updateServerStatus, 30000);
+// Initial fetch
+fetchServerStatus();
+
+// Refresh every 15 seconds
+setInterval(fetchServerStatus, 15000);
 </script>
 
 </body>
