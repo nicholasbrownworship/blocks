@@ -9,16 +9,20 @@
 <body>
 <header>
 <h1>Server Status</h1>
-<p>Status: <span id="server-status">Loading...</span></p>
-<p>Players Online: <span id="player-count">0</span></p>
-<ul id="player-list"></ul>
 </header>
+
 <nav>
 <a href="index.html">Home</a>
 <a href="gallery.html">Gallery</a>
 <a href="community.html">Community</a>
 <a href="about.html">About</a>
 </nav>
+
+<div class="card">
+<p>Status: <span id="server-status">Loading...</span></p>
+<p>Players Online: <span id="player-count">0</span></p>
+<ul id="player-list"></ul>
+</div>
 
 <script>
 const serverIP = 'introduction-perfume.gl.at.ply.gg:40238';
@@ -34,7 +38,6 @@ function fetchServerStatus() {
         statusEl.textContent = 'Online';
         const onlinePlayers = data.players?.online || 0;
         countEl.textContent = onlinePlayers;
-
         listEl.innerHTML = '';
         if (data.players?.list) {
           data.players.list.forEach(name => {
@@ -57,10 +60,7 @@ function fetchServerStatus() {
     });
 }
 
-// Initial fetch
 fetchServerStatus();
-
-// Refresh every 30 seconds
 setInterval(fetchServerStatus, 30000);
 </script>
 </body>
