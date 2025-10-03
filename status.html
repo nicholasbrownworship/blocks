@@ -48,6 +48,9 @@ async function fetchServerStatus() {
     const response = await fetch(`https://api.mcsrvstat.us/bedrock/2/${serverAddress}:${serverPort}`);
     const data = await response.json();
 
+    // Debug log the full API response
+    console.log('API Response:', data);
+
     const statusEl = document.getElementById("server-status");
     const playerCountEl = document.getElementById("player-count");
     const playerListEl = document.getElementById("player-list");
@@ -55,13 +58,25 @@ async function fetchServerStatus() {
     if(data.online) {
       statusEl.textContent = "Online";
       statusEl.className = "online";
+      
+      // For Bedrock, sometimes data.players is undefined or doesn't have 'list'
+      let playerCount = 0;
+      let players = [];
 
-      const players = data.players?.list || [];
-      playerCountEl.textContent = players.length;
+      // If players property exists
+      if (data.players) {
+        playerCount = data.players.online || 0;
+        // For Bedrock: list may not exist, may be null, or may be an array
+        if (Array.isArray(data.players.list)) {
+          players = data.players.list;
+        }
+      }
+
+      playerCountEl.textContent = playerCount;
 
       // Clear current list
       playerListEl.innerHTML = "";
-      if(players.length === 0){
+      if(players.length === 0) {
         playerListEl.innerHTML = "<li>No players online</li>";
       } else {
         players.forEach(player => {
