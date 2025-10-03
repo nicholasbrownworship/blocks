@@ -1,124 +1,16 @@
-/* Import pixel-style font */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-/* Reset default margins and paddings */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body style */
-body {
-    font-family: 'Press Start 2P', monospace;
-    background: linear-gradient(to bottom, #1a1a1a, #121212);
-    color: #fff;
-    text-align: center;
-    min-height: 100vh;
-    background-image: url('../images/bg_texture.png'); /* optional Minecraft texture */
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-/* Header */
-header {
-    padding: 30px 20px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-bottom: 3px solid #0f0;
-    box-shadow: 0 0 15px #0f0;
-    margin-bottom: 20px;
-}
-
-/* Navigation */
-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #0f0;
-    padding: 10px 20px;
-    border: 2px solid #0f0;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-}
-
-nav a:hover {
-    background-color: #0f0;
-    color: #000;
-    box-shadow: 0 0 10px #0f0;
-}
-
-/* Cards / Content panels */
-.card {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 2px solid #0f0;
-    border-radius: 10px;
-    padding: 25px;
-    margin: 20px auto;
-    max-width: 800px;
-    box-shadow: 0 0 15px #0f0;
-}
-
-/* Buttons */
-button {
-    padding: 12px 25px;
-    background-color: #0f0;
-    border: 2px solid #0a0;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: 'Press Start 2P', monospace;
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    background-color: #00ff00;
-    box-shadow: 0 0 15px #0f0;
-}
-
-/* Gallery */
-.slider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.slider img {
-    width: 80%;
-    max-width: 600px;
-    margin: 10px 0;
-    border: 3px solid #0f0;
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.slider img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #0f0;
-}
-
-/* Lists */
-ul {
-    list-style: none;
-    margin-top: 15px;
-}
-
-ul li {
-    padding: 5px 0;
-    border-bottom: 1px solid #0f0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-    }
-
-    .slider img {
-        width: 95%;
-    }
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Press Start 2P', monospace; background: linear-gradient(to bottom, #1a1a1a, #121212); color: #fff; text-align: center; min-height: 100vh; background-size: cover; background-attachment: fixed; }
+header { padding: 30px 20px; background-color: rgba(0,0,0,0.7); border-bottom: 3px solid #0f0; box-shadow: 0 0 15px #0f0; margin-bottom: 20px; }
+nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
+nav a { text-decoration: none; color: #0f0; padding: 10px 20px; border: 2px solid #0f0; border-radius: 6px; transition: all 0.3s ease; }
+nav a:hover { background-color: #0f0; color: #000; box-shadow: 0 0 10px #0f0; }
+.card { background-color: rgba(0,0,0,0.7); border: 2px solid #0f0; border-radius: 10px; padding: 25px; margin: 20px auto; max-width: 800px; box-shadow: 0 0 15px #0f0; }
+button { padding: 12px 25px; background-color: #0f0; border: 2px solid #0a0; border-radius: 6px; cursor: pointer; font-family: 'Press Start 2P', monospace; transition: all 0.3s ease; }
+button:hover { background-color: #00ff00; box-shadow: 0 0 15px #0f0; }
+.slider { display: flex; flex-direction: column; align-items: center; }
+.slider img { width: 80%; max-width: 600px; margin: 10px 0; border: 3px solid #0f0; border-radius: 8px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.slider img:hover { transform: scale(1.05); box-shadow: 0 0 15px #0f0; }
+ul { list-style: none; margin-top: 15px; }
+ul li { padding: 5px 0; border-bottom: 1px solid #0f0; }
+@media (max-width: 768px) { nav { flex-direction: column; } .slider img { width: 95%; } }

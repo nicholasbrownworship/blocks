@@ -5,9 +5,5 @@ window.addEventListener('DOMContentLoaded', () => {
     const listEl = document.getElementById('player-list');
     statusEl.textContent = 'Online';
     countEl.textContent = '3';
-    ['Player1','Player2','Player3'].forEach(name => {
-        const li = document.createElement('li');
-        li.textContent = name;
-        listEl.appendChild(li);
-    });
+    ['Player1','Player2','Player3'].forEach(name => { const li = document.createElement('li'); li.textContent = name; listEl.appendChild(li); });
 });

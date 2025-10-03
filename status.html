@@ -1,67 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Server Status</title>
-<link rel="stylesheet" href="assets/css/styles.css">
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Server Status</title><link rel="stylesheet" href="assets/css/styles.css"></head>
 <body>
-<header>
-<h1>Server Status</h1>
-</header>
-
-<nav>
-<a href="index.html">Home</a>
-<a href="gallery.html">Gallery</a>
-<a href="community.html">Community</a>
-<a href="about.html">About</a>
-</nav>
-
+<header><h1>Server Status</h1></header>
+<nav><a href="index.html">Home</a><a href="gallery.html">Gallery</a><a href="community.html">Community</a><a href="about.html">About</a></nav>
 <div class="card">
 <p>Status: <span id="server-status">Loading...</span></p>
 <p>Players Online: <span id="player-count">0</span></p>
 <ul id="player-list"></ul>
 </div>
-
-<script>
-const serverIP = 'introduction-perfume.gl.at.ply.gg:40238';
-const statusEl = document.getElementById('server-status');
-const countEl = document.getElementById('player-count');
-const listEl = document.getElementById('player-list');
-
-function fetchServerStatus() {
-  fetch(`https://api.mcsrvstat.us/bedrock/2/${serverIP}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.online) {
-        statusEl.textContent = 'Online';
-        const onlinePlayers = data.players?.online || 0;
-        countEl.textContent = onlinePlayers;
-        listEl.innerHTML = '';
-        if (data.players?.list) {
-          data.players.list.forEach(name => {
-            const li = document.createElement('li');
-            li.textContent = name;
-            listEl.appendChild(li);
-          });
-        }
-      } else {
-        statusEl.textContent = 'Offline';
-        countEl.textContent = '0';
-        listEl.innerHTML = '';
-      }
-    })
-    .catch(err => {
-      statusEl.textContent = 'Error';
-      countEl.textContent = '0';
-      listEl.innerHTML = '';
-      console.error('Error fetching server status:', err);
-    });
-}
-
-fetchServerStatus();
-setInterval(fetchServerStatus, 30000);
-</script>
-</body>
-</html>
+</body></html>
